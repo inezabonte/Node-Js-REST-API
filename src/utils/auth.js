@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import messages from './messages';
 
 const salt = bcrypt.genSaltSync(parseInt(process.env.SALT_ROUNDS, 10));
-const secret = process.env.SECRET_KEY;
+const { secret, expiresIn } = process.env.SECRET_KEY;
 
 /**
  * Generate JWT
@@ -11,7 +11,7 @@ const secret = process.env.SECRET_KEY;
  * @param {String} expiresIn jwt expiry date
  * @returns {String} - jwt token
  */
-export const generateToken = (payload, expiresIn = '7 days') => {
+export const generateToken = (payload, expiresIn) => {
   const token = jwt.sign({ ...payload }, secret, { expiresIn });
   return token;
 };

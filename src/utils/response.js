@@ -1,21 +1,37 @@
-/**
- *  Send response message
- *
- * @param {object} res - response object
- * @param {number} status - http status code
- * @param {string} statusMessage - http status message
- * @param {object} data - response data
- *
- * @returns {object} returns response
- *
- * @example
- *
- *    response(res, 404, 'error', { message: 'not found'})
- */
-const response = (res, status, statusMessage, data) =>
-  res.status(status).json({
-    status: statusMessage,
-    data,
-  });
+export default class Util {
+  constructor() {
+    this.statusCode = null;
+    this.type = null;
+    this.data = null;
+    this.message = null;
+  }
 
-export default response;
+  setSuccess(statusCode, message, data) {
+    this.statusCode = statusCode;
+    this.message = message;
+    this.data = data;
+    this.type = 'success';
+  }
+
+  setError(statusCode, message) {
+    this.statusCode = statusCode;
+    this.message = message;
+    this.type = 'error';
+  }
+
+  send(res) {
+    const result = {
+      status: this.type,
+      message: this.message,
+      data: this.data,
+    };
+
+    if (this.type === 'success') {
+      return res.status(this.statusCode).json(result);
+    }
+    return res.status(this.statusCode).json({
+      status: this.type,
+      message: this.message,
+    });
+  }
+}
