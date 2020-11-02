@@ -1,6 +1,5 @@
-import Util from '../utils/response';
 import userRoute from './api/user';
-const util = new Util();
+import response from '../utils/responses';
 
 const routes = router => {
   router
@@ -33,10 +32,10 @@ const routes = router => {
      *             message:
      *               type: string
      */
-    .get(
-      (req, res) =>
-        util.setSuccess(200, 'Successfully retrieved a user profile', data),
-      util.send(res)
+    .get((req, res) =>
+      response(res, 200, 'success', {
+        message: 'Welcome simple nodejs  API (version 1)',
+      })
     );
 
   // user routes

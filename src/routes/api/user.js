@@ -44,6 +44,6 @@ const userRoute = router => {
      *         description: Internal Server error
      */
 
-    .post(signUp);
+    .post(Signup);
 };
 export default userRoute;
