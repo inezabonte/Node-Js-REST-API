@@ -1,0 +1,55 @@
+import Joi from '@hapi/joi';
+import JoiValidator from './validate';
+
+const signUpSchema = Joi.object({
+  email: JoiValidator.validateEmail().required(),
+  password: JoiValidator.validatePassword().required(),
+  firstName: JoiValidator.validateString().required(),
+  lastName: JoiValidator.validateString().required(),
+});
+
+const signInSchema = Joi.object({
+  email: JoiValidator.validateEmail().required(),
+  password: JoiValidator.validatePassword().required(),
+});
+
+const updateUserSchema = Joi.object({
+  firstName: JoiValidator.validateString().required(),
+  lastName: JoiValidator.validateString().required(),
+  gender: JoiValidator.validateString().required(),
+  birthDate: JoiValidator.validateDate().required(),
+  preferredCurrency: JoiValidator.validateString().required(),
+  preferredLanguage: JoiValidator.validateString().required(),
+  currentLocation: JoiValidator.validateString().required(),
+});
+
+const emailSchema = Joi.object({
+  email: JoiValidator.validateEmail().required(),
+});
+
+const passwordSchema = Joi.object({
+  password: JoiValidator.validatePassword()
+    .min(8)
+    .required(),
+});
+
+const getUserSchema = Joi.object({
+  userId: JoiValidator.validateUuidV4(),
+});
+
+const setUserRoleSchema = Joi.object({
+  userId: JoiValidator.validateUuidV4().required(),
+  role: JoiValidator.validateString()
+    .valid('admin', 'manager', 'super-admin', 'normal')
+    .required(),
+});
+
+export {
+  signUpSchema,
+  signInSchema,
+  updateUserSchema,
+  getUserSchema,
+  setUserRoleSchema,
+  emailSchema,
+  passwordSchema,
+};
